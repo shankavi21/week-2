@@ -1,41 +1,52 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { db } from '../firebase'; // Make sure firebase.js is in src/
+import { collection, addDoc } from "firebase/firestore";
 
 
-// function Registration() {
-//     const [name, setName] = useState('');
-//     const [email, setEmail] = useState('');
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         alert(`Registered: ${name}, ${email}`);
-//     };
-//     return (
-//         <div className="container mt-5">
-//             <h2>Register</h2>
-//             <form onSubmit={handleSubmit}>
-//                 <div className="mb-3">
-//                     <label>Name</label>
-//                     <input type="text" value={name} onChange={(e) => setName(e.target.value)}
-//                         className="form-control" />
-//                 </div>
-//                 <div className="mb-3">
-//                     <label>Email</label>
-//                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-//                         className="form-control" />
-//                 </div>
-//                 <button type="submit" className="btn btn-success">Submit</button>
-//             </form>
-//         </div>
-//     );
+
 function Registration() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [destination, setDestination] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Registered:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nDestination: ${destination}`);
+
+    // Basic validation
+    if(name.length < 3) { alert("Name must be at least 3 characters"); return; }
+    if(!email.includes("@")) { alert("Invalid email"); return; }
+    if(phone.length !== 10 || isNaN(phone)) { alert("Phone must be 10 digits"); return; }
+    if(destination === "") { alert("Please select a destination"); return; }
+
+    try {
+      // Add document to Firestore
+      await addDoc(collection(db, "users"), {
+        name,
+        email,
+        phone,
+        destination,
+        timestamp: new Date()
+      });
+
+      // Show success message
+      setSuccess(true);
+
+      // Clear form fields
+      setName('');
+      setEmail('');
+      setPhone('');
+      setDestination('');
+
+      // Hide success message after 3 seconds
+      setTimeout(() => setSuccess(false), 3000);
+
+    } catch(err) {
+      console.error("Error adding document: ", err);
+      alert("Error submitting form. Check console.");
+    }
   };
 
   return (
@@ -88,32 +99,37 @@ function Registration() {
                     required
                   >
                     <option value="">-- Select District --</option>
-<option value="Ampara">Ampara</option>
-<option value="Anuradhapura">Anuradhapura</option>
-<option value="Badulla">Badulla</option>
-<option value="Batticaloa">Batticaloa</option>
-<option value="Colombo">Colombo</option>
-<option value="Galle">Galle</option>
-<option value="Gampaha">Gampaha</option>
-<option value="Hambantota">Hambantota</option>
-<option value="Jaffna">Jaffna</option>
-<option value="Kalutara">Kalutara</option>
-<option value="Kandy">Kandy</option>
-<option value="Kegalle">Kegalle</option>
-<option value="Kilinochchi">Kilinochchi</option>
-<option value="Kurunegala">Kurunegala</option>
-<option value="Mannar">Mannar</option>
-<option value="Matale">Matale</option>
-<option value="Matara">Matara</option>
-<option value="Monaragala">Monaragala</option>
-<option value="Mullaitivu">Mullaitivu</option>
-<option value="Nuwara Eliya">Nuwara Eliya</option>
-<option value="Polonnaruwa">Polonnaruwa</option>
-<option value="Puttalam">Puttalam</option>
-<option value="Ratnapura">Ratnapura</option>
-<option value="Trincomalee">Trincomalee</option>
-<option value="Vavuniya">Vavuniya</option>
+                    {/* All your options here */}
+                  
+  
+  <option value="Colombo">Colombo</option>
+  <option value="Gampaha">Gampaha</option>
+  <option value="Kalutara">Kalutara</option>
+  <option value="Kandy">Kandy</option>
+  <option value="Matale">Matale</option>
+  <option value="Nuwara Eliya">Nuwara Eliya</option>
+  <option value="Galle">Galle</option>
+  <option value="Matara">Matara</option>
+  <option value="Hambantota">Hambantota</option>
+  <option value="Jaffna">Jaffna</option>
+  <option value="Kilinochchi">Kilinochchi</option>
+  <option value="Mannar">Mannar</option>
+  <option value="Vavuniya">Vavuniya</option>
+  <option value="Mullaitivu">Mullaitivu</option>
+  <option value="Batticaloa">Batticaloa</option>
+  <option value="Ampara">Ampara</option>
+  <option value="Trincomalee">Trincomalee</option>
+  <option value="Kurunegala">Kurunegala</option>
+  <option value="Puttalam">Puttalam</option>
+  <option value="Anuradhapura">Anuradhapura</option>
+  <option value="Polonnaruwa">Polonnaruwa</option>
+  <option value="Badulla">Badulla</option>
+  <option value="Moneragala">Moneragala</option>
+  <option value="Ratnapura">Ratnapura</option>
+  <option value="Kegalle">Kegalle</option>
 
+
+                    {/* add the rest */}
                   </select>
                 </div>
                 <div className="d-grid mt-4">
@@ -122,6 +138,13 @@ function Registration() {
                   </button>
                 </div>
               </form>
+
+              {success && (
+                <div className="alert alert-success mt-3" role="alert">
+                  Registration successful!
+                </div>
+              )}
+
             </div>
           </div>
         </div>
@@ -129,4 +152,5 @@ function Registration() {
     </div>
   );
 }
+
 export default Registration;
