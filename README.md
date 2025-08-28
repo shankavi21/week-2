@@ -1,30 +1,19 @@
-# week-2
-create react basic project
 # Explore SriLanka
 
-A mobile-friendly tourism web app to discover Sri Lankan destinations, manage travel data, and plan trips efficiently.
+Explore SriLanka is a React-based tourism web application integrated with Firebase. It helps travelers discover destinations, manage trips, and register their details. The app is fully responsive and mobile-friendly.
 
-## 📖 Description
-**Explore SriLanka** is a React-based web application integrated with **Firebase** for authentication and database management.  
-It features a responsive design with **Bootstrap**, offering a registration form for travelers to input their details and preferred destinations across Sri Lanka's districts.  
+## Features
+- Explore popular Sri Lankan destinations
+- User registration with validation
+- Store and manage user data in Firebase Firestore
+- Search, edit, delete, and sort registered users
+- Responsive design using Bootstrap
+- Navigation using React Router
 
-The app also highlights vibrant cultural elements like traditional masks 🪅 and aims to enhance the tourism experience.
+## Technologies Used
+- React.js
+- Firebase (Firestore)
+- Bootstrap
+- React Router DOM
 
----
-
-## 🛠 Tech Stack
-- **Frontend**: React (Create React App), Bootstrap
-- **Backend / Database**: Firebase (Firestore, Authentication)
-- **Hosting**: Firebase Hosting (planned)
-
----
-
-## ✨ Features
-- Registration form for traveler details
-- Destination selection from Sri Lanka's districts
-- Mobile-friendly responsive UI
-- Firebase database integration  
-- Upcoming: Login & authentication system  
-
----
 

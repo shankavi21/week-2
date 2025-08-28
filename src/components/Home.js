@@ -5,17 +5,7 @@ import heroImage from "../assets/mask.jpg";
 
 // function Home() {
     
-//     return (
-//         <div className="container mt-5">
-            
-//             <h1>Welcome to Explore SriLanka!</h1>
-//             <p>Manage your data efficiently using our mobile-friendly app.</p>
-//             <div className="button-group">
-//                 <Link to="/registration" className="btn btn-primary me-2">Register</Link>
-//                 {/* <Link to="/about" className="btn btn-secondary">About</Link> */}
-//             </div>
-//         </div>
-//     );
+
 function Home() {
   return (
     <div>
